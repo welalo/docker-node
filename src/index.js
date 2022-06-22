@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config()
 const {connectMongo} = require('./services/dbConnnector')
 const routes = require('./routes')
+const {handleError} = require('./handles/handleError')
 
 const app =  express();
 app.use(express.json());
@@ -14,9 +15,19 @@ const PORT = process.env.PORT || 3000;
 app.use('/api',routes)
 
 
+
+
+//manejadores errores
+
 app.use((err, req, res, next) => {
-    res.status(500).json({Error: err.message})
+    handleError(res, 500)
 })
+
+app.use((req,res,next) => {
+    handleError(res, 404)
+})
+ 
+
 
 app.listen(PORT, error => {
     
