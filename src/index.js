@@ -1,5 +1,6 @@
-const express = require('express');
 require('dotenv').config()
+
+const express = require('express');
 const {connectMongo} = require('./services/dbConnnector')
 const routes = require('./routes')
 const {handleError} = require('./handles/handleError')
@@ -20,7 +21,7 @@ app.use('/api',routes)
 //manejadores errores
 
 app.use((err, req, res, next) => {
-    handleError(res, 500)
+    handleError(res, 500, err.message)
 })
 
 app.use((req,res,next) => {
@@ -29,7 +30,7 @@ app.use((req,res,next) => {
  
 
 
-app.listen(PORT, error => {
+const server = app.listen(PORT, error => {
     
     if(error)
         throw error;
@@ -37,3 +38,5 @@ app.listen(PORT, error => {
     console.log(`App running in port ${PORT}!!!`)
 
 });
+
+module.exports = server;

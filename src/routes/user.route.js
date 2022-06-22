@@ -1,15 +1,16 @@
 const {Router} = require('express');
 const {getUsers, getDetailUser, createUser, deleteUser, updateUser} = require('../controllers/user.controller')
-const {validatorUser} =  require('./../validators/user.validadors')
+const {validatorCreateUser, validatorIdUser} =  require('./../validators/user.validadors')
 
 const user = Router();
 
 user.get('/', getUsers)
-user.get('/:id', getDetailUser)
-user.delete('/:id', deleteUser)
-user.put('/:id', updateUser)
+user.get('/:id', validatorIdUser, getDetailUser)
+user.post('/', validatorCreateUser, createUser)
+user.delete('/:id', validatorIdUser, deleteUser)
+user.put('/:id', validatorIdUser, updateUser)
 
-user.post('/', validatorUser, createUser)
+
 
 
 module.exports = user;

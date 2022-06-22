@@ -1,5 +1,6 @@
 const User = require('../models/user.model')
 const {handleError} = require('./../handles/handleError')
+const {matchedData} = require('express-validator')
 
 async function getUsers(req,res){
     try {
@@ -14,10 +15,14 @@ async function getUsers(req,res){
 async function getDetailUser(req,res){
 
     try {
-        const data =  await User.findById(req.params.id);
+
+        const {id} =  matchedData(req);
+        const data =  await User.findById(id);
+
         if(!data)
             return handleError(res, 404, 'Usuario no encontrado');
         res.status(200).json(data)
+
     } catch (error) {
         handleError(res, 500, error.message);
     }
@@ -25,8 +30,12 @@ async function getDetailUser(req,res){
 
 async function createUser(req,res){
     try {
-        const data =  await User.create(req.body)
-        res.status(200).json(data)
+
+        const {body} =  matchedData(req);
+        const data =  await User.create(body);
+
+        res.status(200).json(data);
+
     } catch (error) {
         handleError(res, 400, error.message);
     }
@@ -35,16 +44,20 @@ async function createUser(req,res){
 async function deleteUser(req,res){
 
     try {
-        const data =  await User.findByIdAndDelete(req.params.id);
+
+        const {id} =  matchedData(req);
+        const data =  await User.findByIdAndDelete(id);
         res.status(200).json(data)
+
     } catch (error) {
         handleError(res, 500, error.message);
     }
 }
 async function updateUser(req,res){
 
+    const {id} =  matchedData(req);
     try {
-        const data =  await User.findByIdAndUpdate(req.params.id, req.body, {returnDocument: 'after'});
+        const data =  await User.findByIdAndUpdate(id, req.body, {returnDocument: 'after'});
         res.status(200).json(data)
     } catch (error) {
         handleError(res, 500, error.message);
