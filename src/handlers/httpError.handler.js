@@ -8,7 +8,7 @@ const {getReasonPhrase} = require('http-status-codes')
  * @returns 
  */
 
-const handlerError = (res, code=500, message='') => {
+const httpErrorHandler = (res, code=500, message='') => {
     return res.status(code).json({
       status: code,
       error: getReasonPhrase(code),
@@ -17,5 +17,5 @@ const handlerError = (res, code=500, message='') => {
 };
 
 module.exports = {
-    handlerError
+  httpErrorHandler
 }

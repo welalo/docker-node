@@ -1,5 +1,5 @@
 const User = require('../models/user.model')
-const {handlerError} = require('./../handlers/handlerError')
+const {httpErrorHandler} = require('../handlers/httpError.handler')
 const {matchedData} = require('express-validator')
 
 async function getUsers(req,res){
@@ -20,11 +20,11 @@ async function getDetailUser(req,res){
         const data =  await User.findById(id);
 
         if(!data)
-            return handlerError(res, 404, 'Usuario no encontrado');
+            return httpErrorHandler(res, 404, 'Usuario no encontrado');
         res.status(200).json(data)
 
     } catch (error) {
-        handlerError(res, 500, error.message);
+        httpErrorHandler(res, 500, error.message);
     }
 }
 
@@ -37,7 +37,7 @@ async function createUser(req,res){
         res.status(200).json(data);
 
     } catch (error) {
-        handlerError(res, 400, error.message);
+        httpErrorHandler(res, 400, error.message);
     }
 }
 
@@ -50,7 +50,7 @@ async function deleteUser(req,res){
         res.status(200).json(data)
 
     } catch (error) {
-        handlerError(res, 500, error.message);
+        httpErrorHandler(res, 500, error.message);
     }
 }
 async function updateUser(req,res){
@@ -60,7 +60,7 @@ async function updateUser(req,res){
         const data =  await User.findByIdAndUpdate(id, req.body, {returnDocument: 'after'});
         res.status(200).json(data)
     } catch (error) {
-        handlerError(res, 500, error.message);
+        httpErrorHandler(res, 500, error.message);
     }
 }
 

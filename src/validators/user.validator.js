@@ -1,5 +1,5 @@
-const {check, matchedData} = require('express-validator');
-const { handlerValidator } = require("./../handlers/handlerValidator");
+const {check} = require('express-validator');
+const { validatorMiddelware } = require("../middlewares/validator.middleware");
 
 //const validator = handleValidator
 
@@ -7,12 +7,12 @@ const validatorCreateUser = [
         check('name').not().isEmpty(),
         check("email").not().isEmpty().isEmail(),
         check("password").not().isEmpty(),
-        handlerValidator
+        validatorMiddelware
 ]
 
 const validatorIdUser = [
     check('id').not().isEmpty().isMongoId(),
-    handlerValidator
+    validatorMiddelware
 ]
 
 

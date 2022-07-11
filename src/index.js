@@ -3,7 +3,7 @@ require('dotenv').config()
 const express = require('express');
 const {connectMongo} = require('./services/dbConnnector')
 const routes = require('./routes')
-const {handlerError} = require('./handlers/handlerError')
+const {httpErrorHandler} = require('./handlers/httpError.handler')
 const PORT = process.env.PORT || 3000;
 
 const app =  express();
@@ -18,11 +18,11 @@ app.use('/api',routes)
 //Error handlers
 
 app.use((err, req, res, next) => {
-    handlerError(res, 500, err.message)
+    httpErrorHandler(res, 500, err.message)
 })
 
 app.use((req,res,next) => {
-    handlerError(res, 404, 'SERVICE_NOT_FOUND')
+    httpErrorHandler(res, 404, 'SERVICE_NOT_FOUND')
 })
  
 
