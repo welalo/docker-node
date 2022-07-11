@@ -1,7 +1,6 @@
 const {check} = require('express-validator');
 const { validatorMiddelware } = require("../middlewares/validator.middleware");
 
-//const validator = handleValidator
 
 const validatorCreateUser = [
         check('name').not().isEmpty(),
