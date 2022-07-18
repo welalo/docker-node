@@ -1,17 +1,17 @@
 const {check} = require('express-validator');
-const { validatorMiddelware } = require("../middlewares/validator.middleware");
+const { validator } = require("../middlewares/validator.middleware");
 
 
 const validatorCreateUser = [
         check('name').not().isEmpty(),
         check("email").not().isEmpty().isEmail(),
         check("password").not().isEmpty(),
-        validatorMiddelware
+        validator
 ]
 
 const validatorIdUser = [
     check('id').not().isEmpty().isMongoId(),
-    validatorMiddelware
+    validator
 ]
 
 
